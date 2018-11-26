@@ -1,0 +1,100 @@
+{% extends "includes/base.html" %}
+
+{% block body %}
+<!-- Page Content -->
+<div class="container">
+    <div class="row">
+        <p>&nbsp;</p>
+        <div class="col-md-3">
+            <p class="lead">Owl Shop</p>
+            <div class="list-group">
+                <a href="/all_items" class="list-group-item">Owl Cushions</a>
+                <a href="#" class="list-group-item">Owls</a>
+                <a href="/sale" class="list-group-item">Sale</a>
+            </div>
+
+        </div>
+         <!-- Search -->
+        {% include 'includes/_search.html' %}
+        <!--</sear>-->
+        <div class="col-md-9">
+            <hr>
+            <h2 style="margin-top: 40px;" class="text-center">
+                My Shopping List
+            </h2>
+            <p>&nbsp;</p>
+            {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                        <h3><center>{{ message }}</center></h3>
+                        <p>&nbsp;</p>
+                        {% endfor %}
+                    {% endif %}
+            {% endwith%}
+            <div style="margin-top: 40px;" class="col-md-12">
+                <table class="table table-bordered text-center">
+                    <thead>
+                    <tr>
+                        <td>Products</td>
+                        <td>Name</td>
+                        <td>Price</td>
+                        <td>Quantity</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for key, value in display_cart.iteritems() %}
+                    <tr>
+                        {% if product.image_url %}
+                        <td width="80"><img src="{{ value['image_url'] }}"  class="{{ value['image_filename'] }}"  width="100" height="100"></td>
+                        {% endif %}
+                        <td style="vertical-align:middle">{{value['name']}}</td>
+                        {% if value['discount']%}
+                        <td style="vertical-align:middle"><del>${{value['price']}}</del><span style="color:red"> {{format_price((value['price'] * value['discount'])/100)}}</span></td>
+                        {% else %}
+                        <td style="vertical-align:middle"> ${{value['price']}}</td>
+                        {% endif %}
+                        <td style="vertical-align:middle; width:80px;">{{value['quantity']}}</td>
+                        <td style="vertical-align:middle; width:40px">
+                            <form action="/shop_item/{{value['sku']}}" method="post">
+                               <input type="hidden" name="sku" value={{value['sku']}}/>
+                               <button type="submit" class="glyphicon glyphicon-plus" #selector:after {
+                                                                                          display: none;
+                                       }>
+                               </button>
+                            </form>
+                            <form action="/delete_shop_item/{{value['sku']}}" method="post">
+                               <input type="hidden" name="sku" value={{value['sku']}}/>
+                               <button type="submit" class="glyphicon glyphicon-minus" #selector:before {
+                                                                                           display: none;
+                                       }>
+                               </button>
+                            </form>
+                        </td>
+                    {% endfor %}
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-12">
+            <div class="pull-right">
+                <form><center>
+                   <label>Total Cost: {{total}}$</label>
+                </center></form>
+                <br>
+               <a href="/all_items" class="btn">Back to Shopping</a>
+                {% if success %}
+               <button class="btn btn-success">Checkout</button>
+                {% else %}
+               <a href="/checkout" class="btn btn-success">Checkout</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- /.container -->
+{% endblock %}
+
+
+
+

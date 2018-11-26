@@ -1,0 +1,60 @@
+{% extends "includes/base.html" %}
+
+{% block body %}
+    <!-- Page Content -->
+    <div class="container">
+        <div class="row">
+            <p>&nbsp;</p>
+            <div class="col-md-3">
+                <p class="lead">Owl Shop</p>
+                <div class="list-group">
+                    <a href="/all_items" class="list-group-item">Owl Cushions</a>
+                    <a href="#" class="list-group-item">Owls</a>
+                    <a href="/sale" class="list-group-item">Sale</a>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div>
+                    <div class="btn-group pull-right">
+                        <a href="/cart" class="btn btn-primary" type="button">Cart</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <hr>
+                    {% block content %}
+                        {% for product in products %}
+                        <div class="col-sm-4 col-lg-4 col-md-4">
+                            <div class="thumbnail">
+                                {% if product.image_url %}
+                                <img src="{{ product.image_url }}" alt="{{ product.image_filename }}" style="width:200px;height:200px;">
+                                {% endif %}
+                                <div class="caption">
+                                    {% if product.discount %}
+                                    <h4 class="pull-right"><del>{{product.price}}</del> <span style="color:red">{{format_price((product.price * product.discount)/100)}}</span></h4>
+                                    {% else %}
+                                    <h4 class="pull-right">{{product.price}}</h4>
+                                    {% endif %}
+                                    <a href="/shop_item/{{product.sku}}">{{product.name}}</a>
+                                    <h4 class="post-title"> </h4>
+                                    <p>{{product.description}}</p>
+                                </div>
+                                <div>
+                                    <form action="/shop_item/{{product.sku}}" method="post">
+                                        <input type="hidden" name="sku" value="{{product.sku}}" />
+                                        <button type="submit" class="btn btn-success">Add to cart</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- /.row -->
+        <hr>
+    </div>
+    <!-- /.container -->
+ {% endblock %}

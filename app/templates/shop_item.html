@@ -1,0 +1,61 @@
+{% extends "includes/base.html" %}
+
+{% block body %}
+    <!-- Page Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <p class="lead">Owl Shop</p>
+                <div class="list-group">
+                    <a href="#" class="list-group-item active">Category 1</a>
+                    <a href="#" class="list-group-item">Category 2</a>
+                    <a href="#" class="list-group-item">Category 3</a>
+                </div>
+            </div>
+            <div class="col-md-9">
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <h3><center>{{ message }}</center></h3>
+                            <p>&nbsp;</p>
+                            {% endfor %}
+                        {% endif %}
+				{% endwith%}
+                <div class="thumbnail">
+                     {% if item.image_url %}
+                        <img src="{{ item.image_url }}" alt="{{ item.image_filename }}" style="width:600px;height:600px;">
+                     {% endif %}
+                    <div class="caption-full">
+                        <h4 class="pull-right">{{ item.price }}</h4>
+                        <h4>{{ item.name }}</a>
+                        </h4>
+                        <p>{{ item.description }}</p>
+                        <p> SKU {{ item.sku }}</p>
+                    </div>
+                    <hr>
+                    <div class="ratings">
+                        <span class="pull-right">
+                            <form action="/shop_item/{{item.sku}}" method="post">
+                                <input type="hidden" name="sku" value="{{item.sku}}" />
+                                <button type="submit" class="btn btn-success">Add to cart</button>
+                            </form>
+                        </span>
+                        <p>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star-empty"></span>
+                            4.0 stars
+                        </p>
+                    </div>
+                </div>
+                <hr>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- /.container -->
+ {% endblock %}
+
+

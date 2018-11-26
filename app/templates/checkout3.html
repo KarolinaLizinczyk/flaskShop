@@ -1,0 +1,127 @@
+{% extends "includes/base.html" %}
+
+{% block body %}
+
+    <!-- Page Content -->
+    <div class="container">
+        <div class="row">
+            <p>&nbsp;</p>
+            <div class="col-md-3">
+                <p class="lead">Owl Shop</p>
+                <div class="list-group">
+                    <a href="/all_items" class="list-group-item">Owl Cushions</a>
+                    <a href="#" class="list-group-item">Owls</a>
+                    <a href="/sale" class="list-group-item">Sale</a>
+                </div>
+
+            </div>
+             <!-- Search -->
+            {% include 'includes/_search.html' %}
+            <!--</sear>-->
+            <!-- Center -->
+            <div class="col-md-9">
+                <hr>
+                <h3><center> Sum Up </center></h3>
+                {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            {% for message in messages %}
+                            <h3><center>{{ message }}</center></h3>
+                            <p>&nbsp;</p>
+                            {% endfor %}
+                        {% endif %}
+				{% endwith%}
+                <!--<div class="row control-group">-->
+                <div style="margin-top: 40px;" class="col-md-10">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                        <tr>
+                            <td class="col-md-2">PN</td>
+                            <td>Name</td>
+                            <td>Quantity</td>
+                            <td class="col-md-5">Price</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for key, value in display_cart.iteritems() %}
+                        <tr>
+                            <td style="vertical-align:middle; width:80px;">{{loop.index}}</td>
+                            <td style="vertical-align:middle">{{value['name']}}</td>
+                            <td style="vertical-align:middle; width:80px;">{{value['quantity']}}</td>
+                            {% if value['discount']%}
+                            <td style="vertical-align:middle"><del>${{value['price']}}</del><span style="color:red"> {{format_price((value['price'] * value['discount'])/100)}}</span></td>
+                            {% else %}
+                            <td style="vertical-align:middle"> ${{value['price']}}</td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    <p>&nbsp;</p>
+                    <hr>
+                    <h4><b>Your Details:</b></h4>
+                    <br>
+                </div>
+                <div class="row control-group">
+                            <form method="post" action="/checkout3">
+                                {% from "_formhelpers.html" import render_field %}
+                                <div class="form-group col-sm-6 floating-label-form-group controls">
+                                    <div class="well well-sm">
+                                        <label> Name: {{order.buyer_name}}</label>
+                                    </div>
+                                    <div class="well well-sm">
+                                        <label> Surname: {{order.buyer_surname}}</label>
+                                    </div>
+                                    <div class="well well-sm">
+                                        <label> Email: {{order.buyer_email}}</label>
+                                    </div>
+                                    <div class="well well-sm">
+                                        <label> Phone Number: {{order.buyer_phone}}</label>
+                                    </div>
+                                    <div class="well well-sm">
+                                        <label> Address: {{order.buyer_address}}</label>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6 floating-label-form-group controls">
+                                    <div class="well well-sm">
+                                        <label> ZipCode: {{order.buyer_zipcode}}</label>
+                                    </div>
+                                    <div class="well well-sm">
+                                        <label> City: {{order.buyer_city}}</label>
+                                    </div>
+                                    <div class="well well-sm">
+                                        <label>{{order.payment_option}}$</label>
+                                    </div>
+                                    <div class="well well-sm">
+                                        <label>{{order.shipment_option}}$</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="col-md-12">
+                                <div class="pull-right">
+                                    <center>
+                                       <label>Total Cost: {{decimal_ss + decimal_pp + total}}$</label>
+                                    </center>
+                                </div>
+                            </div>
+                            {% if success != True %}
+                            <p>&nbsp;</p>
+                            <div class="checkbox" align="right" >
+                                <label><input type="checkbox" id="checkbox"> Accept Shop Terms</label>
+                            </div>
+                            <br>
+                            <div id="success">
+                                <button id="submit_button" type="submit" class="btn pull-right" disabled>Confirm</button>
+                                <a href="/checkout2" class="btn pull-right">Previous Step</a>
+                            </div>
+                            {% endif %}
+                        </form>
+                </div>
+            </div>
+    </div>
+        <!-- /.row -->
+        <hr>
+    </div>
+    <!-- /.container -->
+{% endblock %}
+
+

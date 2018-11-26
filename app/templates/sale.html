@@ -1,0 +1,66 @@
+{% extends "includes/base.html" %}
+
+{% block body %}
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+            <p>&nbsp;</p>
+            <div class="col-md-3">
+                <p class="lead">Owl Shop</p>
+                <div class="list-group">
+                    <a href="/all_items" class="list-group-item">Owl Cushions</a>
+                    <a href="#" class="list-group-item">Owls</a>
+                    <a href="/sale" class="list-group-item">Sale</a>
+                </div>
+            </div>
+             <!-- Search -->
+            {% include 'includes/_search.html' %}
+            <!--</sear>-->
+            <div class="col-md-9">
+                <hr>
+                <div>
+                    <img src="http://media.home-you.com/themes/hy/img/podstrona-170706-summersale_70_podstrona_832pix_EN.png" class="img-responsive">
+                </div>
+                <p>&nbsp</p>
+                <div class="row">
+                    {% block content %}
+                    {% for product in all_items.items %}
+                    {% if product.discount %}
+                    <div class="col-sm-4 col-lg-4 col-md-4">
+                        <div class="thumbnail">
+                            {% if product.image_url %}
+                              <img src="{{ product.image_url }}" alt="{{ product.image_filename }}" style="width:200px;height:200px;">
+                            {% endif %}
+                            <div class="caption">
+                                <h4 class="pull-right"><del>{{product.price}}</del> <span style="color:red">{{format_price((product.price * product.discount)/100)}}</span></h4>
+                                <a href="/shop_item/{{product.sku}}">{{product.name}}</a>
+                                <h4 class="post-title"> </h4>
+                                <p>{{product.description}}</p>
+                            </div>
+                            <div>
+                                <form action="/shop_item/{{product.sku}}" method="post">
+                                    <input type="hidden" name="sku" value="{{product.sku}}" />
+                                    <button type="submit" class="btn btn-success">Add to cart</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    {% endblock %}
+                    <div class="col-md-12">
+                    <p>&nbsp;</p>
+                      <ul class="pager">
+                          {% if all_items.has_prev %}<li class="previous"><a href="{{ url_for('sale', page=all_items.prev_num) }}"><< Previous Page</a></li>{% else %}{% endif %}
+                          {% if all_items.has_next %}<li class="next"><a href="{{ url_for('sale', page=all_items.next_num) }}">Next Page &gt;&gt;</a></li>{% else %}{% endif %}
+                      </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <hr>
+    </div>
+    <!-- /.container -->
+{% endblock %}

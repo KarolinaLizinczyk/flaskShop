@@ -1,0 +1,70 @@
+{% extends "includes/base.html" %}
+
+{% block body %}
+
+{% block content %}
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <p>&nbsp;</p>
+            <div class="col-lg-12 col-lg-offset-2 col-md-12 col-md-offset-1">
+				<h3><center> Here is list of all your orders </center></h3>
+				<p>&nbsp</p>
+				{% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            {% for message in messages %}
+                            <h3><center>{{ message }}</center></h3>
+                            <p>&nbsp;</p>
+                            {% endfor %}
+                        {% endif %}
+				{% endwith%}
+                <p>&nbsp;</p>
+				<div class="row control-group">
+					<table class="table table-striped">
+                        <tr>
+                            <th>ID</th>
+                            <th>SKU</th>
+                            <th class="col-md-1">NAME</th>
+                            <th class="col-md-1">SURNAME</th>
+                            <th class="col-md-1">EMAIL</th>
+                            <th class="col-md-1">PHONE NUMBER</th>
+                            <th class="col-md-1">ADDRESS</th>
+                            <th class="col-md-1">ZIPCODE</th>
+                            <th class="col-md-1">CITY</th>
+                            <th class="col-md-1">PAYMENT OPTION</th>
+                            <th class="col-md-1">SHIPMENT OPTION</th>
+                            <th>TOTAL PRICE</th>
+                            <th></th>
+                        </tr>
+                        {% for order in all_orders %}
+                        <tr>
+                            <td>{{order.id}}</td>
+                            <td>{{order.product_sku}}</td>
+                            <td>{{order.buyer_name}}</td>
+                            <td>{{order.buyer_surname}}</td>
+                            <td>{{order.buyer_email}}</td>
+                            <td >{{order.buyer_phone}}</td>
+                            <td>{{order.buyer_address}}</td>
+                            <td>{{order.buyer_zipcode}}</td>
+                            <td>{{order.buyer_city}}</td>
+                            <td>{{order.payment_option}}</td>
+                            <td>{{order.shipment_option}}</td>
+                            <td>{{order.total_price}}$</td>
+                            <td>
+                                <form action="{{url_for('delete_order', id=order.id)}}" method="post">
+                                    <input type="hidden" name="method" value="Delete">
+                                    <input type="submit" value="Released" class="btn btn-danger">
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                {% endblock %}
+            </div>
+         </div>
+        <!-- /.row -->
+        <hr>
+    </div>
+    <!-- /.container -->
+{% endblock %}

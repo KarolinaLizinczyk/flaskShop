@@ -1,0 +1,56 @@
+{% extends "includes/base.html" %}
+
+{% block body %}
+
+{% block content %}
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <p>&nbsp;</p>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+				<h3><center> Here is list of all your products </center></h3>
+				<p>&nbsp</p>
+				{% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            {% for message in messages %}
+                            <h3><center>{{ message }}</center></h3>
+                            <p>&nbsp;</p>
+                            {% endfor %}
+                        {% endif %}
+				{% endwith%}
+                <p>&nbsp;</p>
+				<div class="row control-group">
+					<table class="table table-striped">
+                        <tr>
+                            <th>ID</th>
+                            <th>SKU</th>
+                            <th>NAME</th>
+                            <th>CATEGORY</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        {% for item in items %}
+                        <tr>
+                            <td>{{item.id}}</td>
+                            <td>{{item.sku}}</td>
+                            <td>{{item.name}}</td>
+                            <td>{{item.category}}</td>
+                            <td><a href="edit_item/{{item.sku}}" class="btn btn-default pull-right">Edit</a></td>
+                            <td>
+                                <form action="{{url_for('delete_item', sku=item.sku)}}" method="post">
+                                    <input type="hidden" name="method" value="DELETE">
+                                    <input type="submit" value="Delete" class="btn btn-danger">
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                {% endblock %}
+            </div>
+         </div>
+        <!-- /.row -->
+        <hr>
+    </div>
+    <!-- /.container -->
+{% endblock %}

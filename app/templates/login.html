@@ -1,0 +1,57 @@
+{% extends "includes/base.html" %}
+
+{% block body %}
+
+{% block content %}
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+				<h3><center> Login </center></h3>
+				<p>&nbsp</p>
+				{% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            {% for message in messages %}
+                            <h3><center>{{ message }}</center></h3>
+                            <p>&nbsp;</p>
+                            {% endfor %}
+                        {% endif %}
+				{% endwith %}
+				<div class="row control-group">
+					<form method="post" action="/login">
+                        {% from "_formhelpers.html" import render_field %}
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12 floating-label-form-group controls">
+                            <!--<label>Phone Number</label>-->
+                            {{ render_field(login_form.email, class="form-control")}}
+                            <!--<input >-->
+                            <p class="help-block text-danger"></p>
+                        </div>
+                    </div>
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12 floating-label-form-group controls">
+                            <!--<label>Message</label>-->
+                            {{ render_field(login_form.password, class="form-control")}}
+                            <!--<textarea rows="5"  ></textarea>-->
+                            <p class="help-block text-danger"></p>
+                        </div>
+                    </div>
+				   <!--<div class="row control-group">-->
+                        <!--<div class="form-group col-xs-12 floating-label-form-group controls">-->
+                            <!--&lt;!&ndash;<label>Message</label>&ndash;&gt;-->
+                            <!--{{ render_field(login_form.confirm, class="form-control")}}-->
+                            <!--&lt;!&ndash;<textarea rows="5"  ></textarea>&ndash;&gt;-->
+                            <!--<p class="help-block text-danger"></p>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <br>
+                    <div id="success"></div>
+                    	<button type="submit" class="btn">Sign in!</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+    <hr>
+{% endblock %}

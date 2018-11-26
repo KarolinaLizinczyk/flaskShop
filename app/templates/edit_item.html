@@ -1,0 +1,87 @@
+{% extends "includes/base.html" %}
+
+{% block body %}
+    {% block content %}
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h3><center> Change your Product </center></h3>
+                <p>&nbsp</p>
+                {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            {% for message in messages %}
+                            <h3><center>{{ message }}</center></h3>
+                            <p>&nbsp;</p>
+                            {% endfor %}
+                        {% endif %}
+                {% endwith%}
+                <div class="row control-group">
+                    <form method="post" action="/edit_item/{{ product.sku }}">
+                        {% from "_formhelpers.html" import render_field %}
+                        <div class="form-group col-xs-12 floating-label-form-group controls">
+                            <!--<label>Name</label>-->
+                            {{ render_field(form.sku, class="form-control")}}
+                            <!--<input type="text" class="form-control" placeholder="Name" id="name" required data-validation-required-message="Please enter your name.">-->
+                            <p class="help-block text-danger"></p>
+                        </div>
+                </div>
+                <div class="row control-group">
+                    <div class="form-group col-xs-12 floating-label-form-group controls">
+                        <!--<label>Email Address</label>-->
+                        {{ render_field(form.name, class="form-control")}}
+                        <!--<input>-->
+                        <p class="help-block text-danger"></p>
+                    </div>
+                </div>
+                <div class="row control-group">
+                    <div class="form-group col-xs-12 floating-label-form-group controls">
+                        <!--<label>Email Address</label>-->
+                        {{ render_field(form.category, class="form-control")}}
+                        <!--<input>-->
+                        <p class="help-block text-danger"></p>
+                    </div>
+                </div>
+                <div class="row control-group">
+                    <div class="form-group col-xs-12 floating-label-form-group controls">
+                        <!--<label>Email Address</label>-->
+                        {{ render_field(form.description, class="form-control")}}
+                        <!--<input>-->
+                        <p class="help-block text-danger"></p>
+                    </div>
+                </div>
+                <div class="row control-group">
+                    <div class="form-group col-xs-12 floating-label-form-group controls">
+                        <!--<label>Email Address</label>-->
+                        {{ render_field(form.price, class="form-control")}}
+                        <!--<input>-->
+                        <p class="help-block text-danger"></p>
+                    </div>
+                </div>
+                <div class="row control-group">
+                    <div class="form-group col-xs-12 floating-label-form-group controls">
+                        <!--<label>Email Address</label>-->
+                        {{ render_field(form.quantity, class="form-control")}}
+                        <!--<input>-->
+                        <p class="help-block text-danger"></p>
+                    </div>
+                </div>
+                <div class="row control-group">
+                    <div class="form-group col-xs-12 floating-label-form-group controls">
+                        <!--<label>Email Address</label>-->
+                        {{ render_field(form.discount, class="form-control")}}
+                        <!--<input>-->
+                        <p class="help-block text-danger"></p>
+                    </div>
+                </div>
+                    <br>
+                    <div id="success">
+                        <button type="submit" class="btn">Update product</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+{% endblock %}
+

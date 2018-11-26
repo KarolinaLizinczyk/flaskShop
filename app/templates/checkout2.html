@@ -1,0 +1,59 @@
+{% extends "includes/base.html" %}
+
+{% block body %}
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+            <p>&nbsp;</p>
+            <div class="col-md-3">
+                <p class="lead">Owl Shop</p>
+                <div class="list-group">
+                    <a href="/all_items" class="list-group-item">Owl Cushions</a>
+                    <a href="#" class="list-group-item">Owls</a>
+                    <a href="/sale" class="list-group-item">Sale</a>
+                </div>
+
+            </div>
+             <!-- Search -->
+            {% include 'includes/_search.html' %}
+            <!--</sear>-->
+            <div class="col-md-9">
+                <hr>
+                <h3><center> Payment and Shipment Details </center></h3>
+                <p>&nbsp;</p>
+                 <br>
+					<form method="post" action="/checkout2" enctype="multipart/form-data">
+                        {% from "_formhelpers.html" import render_field %}
+                         <div class="form-group">
+                              <label for="select_payment_option">Payment Option</label>
+                              <select class="form-control" id="select_payment_option" name="select_payment_option">
+                                <option value="Payment on delivery 5.00" selected>Payment on Delivery 5.00$</option>
+                                <option value="Prepaid 0.00">Prepaid 0.00$</option>
+                              </select>
+                         </div>
+                        <br>
+                        <div class="form-group">
+                              <label for="select_shipment_option">Shipment Option</label>
+                              <select class="form-control" id="select_shipment_option" name="select_shipment_option">
+                                <option value="Courier InPost 13.99" selected>Courier InPost 13.99$</option>
+                                <option value="Parcel Locker 11.99">Parcel Locker 11.99$</option>
+                                <option value="Polish Mail 10.99">Polish Mail 10.99$</option>
+                                <option value="Courier DPD 14.99">Courier DPD 14.99$</option>
+                              </select>
+                         </div>
+                    <br>
+                    <div id="success"></div>
+                        <a href="/checkout" class="btn">Previous Step</a>
+                    	<button type="submit" class="btn">Sum Up</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+        <!-- /.row -->
+        <hr>
+    </div>
+    <!-- /.container -->
+{% endblock %}
